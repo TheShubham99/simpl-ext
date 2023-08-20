@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2,
+    "name": "Shopify Wishlist Extension",
+    "version": "1.0",
+    "description": "Add items to your wishlist on Shopify stores.",
+    "permissions": [
+        "activeTab"
+    ],
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.myshopify.com/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}

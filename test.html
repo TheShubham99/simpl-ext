@@ -1,0 +1,203 @@
+<script>
+    function closeModal() {
+  
+      document.getElementById("wrapper").style.display = "none";
+    }
+
+    let phoneNumber = "";
+
+// Get a reference to the input element
+const phoneInput = document.getElementById("phone");
+
+// Add an event listener for the "input" event (which triggers when the input value changes)
+phoneInput.addEventListener("input", function (event) {
+  // Update the phoneNumber variable with the new value
+  phoneNumber = event.target.value;
+});
+
+    function getUserId(){
+        
+        const maps = {
+            "9667970094":"us_2JnsCBy7Os5PO2jHWGPFNgT5rp6",
+            "8872664894":"us_2MxSBzRF46ZWvwR5XOx2KkK6fTs"
+        }
+
+        return map[phoneNumber]
+    }
+
+    async function addToWishlist() {
+      const url = window.location.href + ".json";
+      const product_url = window.location.href;
+  
+      return fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('HTTP error! Status: ');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const postData = {
+            product_url: product_url,
+            product: data.product,
+          };
+          
+          const userId=getUserId()
+
+          const postUrl =
+            "https://4000-theshubham9-simplwishli-qn72bzrfg0m.ws-us104.gitpod.io/api/v1/wishlist/3213123232";
+  
+          return fetch(postUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(postData),
+          });
+        })
+        .then((postResponse) => {
+          if (!postResponse.ok) {
+            throw new Error('POST error! Status: ');
+          }
+          return postResponse.json();
+        })
+        .then((responseData) => {
+          console.log("Post Response:", responseData);
+          iframeURL = responseData.redirection_url;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          return "https://example.com";
+        });
+    }
+  </script>
+  <style>
+    .wrapper {
+      padding: 20px;
+      padding-bottom: 15px;
+      /* border: 1px solid #00a699; */
+      box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      width: fit-content;
+      background-color: #f6f6f6;
+      position: fixed;
+      top:10px;
+      right: 10px;
+      z-index: 10;
+    }
+    .heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    label {
+      font-weight: 500;
+      color: #494949;
+    }
+    .phone {
+      background: transparent;
+      color: #494949;
+      margin-top: 16px;
+      padding: 4px;
+      width: 238px;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #00d1c1;
+      -moz-appearance: textfield;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .submit {
+      padding: 8px 14px;
+      background-color: #00a699;
+      color: #fff;
+      font-weight: 600;
+      outline: none;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 16px;
+      position: relative;
+      left: 165px;
+    }
+    .cross {
+      color: #494949;
+      font-weight: 600;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      padding: 0;
+    }
+    .bottom-icon-group {
+      display: flex;
+      gap: 10px;
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      z-index: 10;
+    }
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      border-radius: 50%;
+      padding: 10px;
+      background: #00d1c1;
+      cursor: pointer;
+      box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
+    }
+    .tooltip {
+      position: fixed;
+      bottom: 10px;
+      right: 120px;
+      z-index: 10;
+    }
+  </style>
+      <div class="wrapper" id="wrapper">
+      <form action="../saumya/otp.html">
+        <div class="heading">
+          <label for="phone">Please enter your Phone Number</label>
+          <button type="button" id="close" class="cross" onclick="closeModal()">
+            x
+          </button>
+        </div>
+        <input
+          type="number"
+          id="phone"
+          name="phone"
+          class="phone"
+          placeholder="+91 XXXXX XXXXX"
+          min="7000000000"
+          max="9999999999"
+        />
+        <br />
+        <button type="submit" class="submit" onclick="submitHandler()">
+          Get OTP
+        </button>
+      </form>
+    </div>
+    <div class="bottom-icon-group">
+      <button class="btn" onclick="addToWishlist()">
+        <img src="https://github.com/saum2000/simpl-wishlist/assets/65463471/ad65eef0-bae9-4955-bebc-cb09fea14d69" alt="" height="25" width="25" />
+      </button>
+      <button class="btn">
+        <img
+          src="https://github.com/saum2000/simpl-wishlist/assets/65463471/52fb738e-f289-4e60-9cc1-09220e8deaf7"
+          alt=""
+          height="25"
+          width="25"
+        />
+      </button>
+    </div>
+    <img
+      src="https://github.com/saum2000/simpl-wishlist/assets/65463471/f711f80d-0aba-4672-b6f3-2c43c2bd3383"
+      class="tooltip"
+      width="150"
+      height="120"
+    />
